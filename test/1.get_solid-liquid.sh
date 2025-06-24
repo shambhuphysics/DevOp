@@ -24,6 +24,7 @@
 #   TL           - Liquid temperature in K (default: 4000)
 #   MDSTEPS_L    - MD steps for equilibration (default: 500)
 #   MDSTEPS_M    - MD steps for melting (default: 1000)
+#   NBLOCKs      - NBLOCK value for VASP (default: 5)
 #   NPROC        - Number of processors (default: 4)
 #
 # REQUIREMENTS:
@@ -37,8 +38,9 @@
 ELEMENT="${ELEMENT:-Al}"
 ATOMS="${ATOMS:-4}"
 KPOINTS_MESH="${KPOINTS_MESH:-2 2 2}"
-MDSTEPS_L="${MDSTEPS_L:-500}"
-MDSTEPS_M="${MDSTEPS_M:-1000}"
+MDSTEPS_L="${MDSTEPS_L:-50}"
+MDSTEPS_M="${MDSTEPS_M:-100}"
+NBLOCKs="${NBLOCKs:-5}"
 TM="${TM:-920}"
 TL="${TL:-4000}"
 NPROC="${NPROC:-4}"
@@ -62,7 +64,7 @@ cat > INCAR << EOF
       IALGO = 48
       ISYM = 0
       IBRION = 0
-      NBLOCK = 5; KBLOCK = 1
+      NBLOCK = $NBLOCKs; KBLOCK = 1
       SMASS = 1.0
       POTIM = 2.0
       ISIF = 1
@@ -90,6 +92,19 @@ copy_potcar() {
     cp ~/POTs/$ELEMENT/POTCAR .
 }
 
+extract_data() {
+    local nblock=${1:-$NBLOCKs}
+    echo "Extracting data every $nblock steps..."
+    
+    # Extract free energy
+    awk -v nblock="$nblock" '/free  en/ {count++; if (count % nblock == 0) print count/nblock, $5}' OUTCAR > free_energy
+    
+    # Extract pressure
+    awk -v nblock="$nblock" '/external pressure/ {count++; if (count % nblock == 0) print count/nblock, $4}' OUTCAR > pressure
+    
+    echo "Data extracted to free_energy and pressure files"
+}
+
 run_phase() {
     local phase_name=$1
     local temp1=$2
@@ -114,6 +129,7 @@ run_phase() {
     # Run first stage
     echo "Running ${phase_name} equilibration at ${temp1}K..."
     mpirun -np $NPROC vasp_std
+    extract_data
     
     # Prepare second stage
     cp CONTCAR POSCAR
@@ -123,6 +139,7 @@ run_phase() {
     # Run second stage
     echo "Running ${phase_name} simulation at ${temp2}K..."
     mpirun -np $NPROC vasp_std
+    extract_data
     
     cd ..
 }
@@ -148,4 +165,4 @@ case $PHASE in
         ;;
 esac
 
-echo "AIMD simulation(s) completed!"
+

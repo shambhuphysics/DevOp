@@ -1,0 +1,17 @@
+      SYSTEM = Al, 4 atoms
+      MAXMIX = 60
+      NPAR = 4
+      LCHARG = .FALSE.
+      LWAVE = .FALSE.
+      NWRITE = 0
+      IALGO = 48
+      ISYM = 0
+      IBRION = 0
+      NBLOCK = 5; KBLOCK = 1
+      SMASS = 1.0
+      POTIM = 2.0
+      ISIF = 1
+      ISMEAR = -1
+TEBEG = 920
+SIGMA = 0.079276
+NSW = 100
