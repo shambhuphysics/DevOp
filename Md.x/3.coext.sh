@@ -19,12 +19,14 @@
 #===============================================================================
 
 # Configuration parameters
+ELEMENT="Mg"
 TOTAL_ATOMS=7064                    # Total number of atoms in system
 TEMP_START=970                      # Starting temperature (K)
 TEMP_END=970                        # Ending temperature (K)
 TEMP_STEP=1                         # Temperature increment (K)
 LIQUID_TEMP=4000                    # Liquid reservoir temperature (K)
 ATOMIC_MASS=24.31                   # Atomic mass of Al (amu)
+NVE_MDLEN=30000
 MPI_CORES=4                         # Number of MPI processes
 
 # EAM potential 
@@ -37,7 +39,7 @@ MPI_CORES=4                         # Number of MPI processes
 # Function to write base INCAR parameters
 write_incar() {
   cat > INCAR << EOF
-        SYSTEM=Al, coexistence
+        SYSTEM=$ELEMENT, coexistence
         LSHIFT=.T.; R1REF=5.5; RL=7.321
         NWRITE=0
         tipo=eam
@@ -85,7 +87,7 @@ run_simulation_step() {
     fi
 }
 
-#===============================================================================
+#===========================A====================================================
 # Main simulation loop
 #===============================================================================
 for temp in $(seq $TEMP_START $TEMP_STEP $TEMP_END); do
@@ -104,6 +106,6 @@ for temp in $(seq $TEMP_START $TEMP_STEP $TEMP_END); do
     cp INCAR INCAR.3
 
     # Step 4: Long NVE evolution for equilibrium sampling
-    run_simulation_step 3000 $temp "" ""
+    run_simulation_step $NVE_MDLEN $temp "" ""
     cp INCAR INCAR.4
 done
