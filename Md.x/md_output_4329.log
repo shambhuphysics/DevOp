@@ -1,3 +1,39 @@
+ running on    6 nodes
+ distr:  one band on    1 nodes,    6 groups
+ md.x 0.99
+ POSCAR found :  1 types and     7056 ions
+Rc and Rl:   5.500000  7.321000
+ TIPO = eam     
+ TIPO1 = uknown p
+ Using EAM
+
+ EAM parameters: 
+ C  =   9.9634  EPS  = 0.2048  A  = 3.5678  M  = 3.127  N  =  6.366  R1 =   5.500000
+
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      VASP found  21165 degrees of freedom                                   |
+|      the temperature will equal 2*E(kin)/ (degrees of freedom)              |
+|      this differs from previous releases, where T was 2*E(kin)/(3 NIONS).   |
+|      The new definition is more consistent                                  |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ Random init:       19566       27137
+ Random init:       19566       27137
+ Random init:       19566       27137
+ Random init:       19566       27137
+ Random init:       19566       27137
+ Random init:       19566       27137
+ alloco spazio per displ
        10 T=  4443. E= -.27255030E+05 F= -.31306892E+05 EK= 0.40519E+04 SP= 0.00E+00 SK= 0.00E+00
        20 T=  4294. E= -.27254723E+05 F= -.31170854E+05 EK= 0.39161E+04 SP= 0.00E+00 SK= 0.00E+00
        30 T=  4264. E= -.27254753E+05 F= -.31143194E+05 EK= 0.38884E+04 SP= 0.00E+00 SK= 0.00E+00
@@ -83,3 +119,11 @@
       830 T=  4250. E= -.27254432E+05 F= -.31130544E+05 EK= 0.38761E+04 SP= 0.00E+00 SK= 0.00E+00
       840 T=  4220. E= -.27254363E+05 F= -.31102966E+05 EK= 0.38486E+04 SP= 0.00E+00 SK= 0.00E+00
       850 T=  4199. E= -.27254314E+05 F= -.31083688E+05 EK= 0.38294E+04 SP= 0.00E+00 SK= 0.00E+00
+      860 T=  4249. E= -.27254408E+05 F= -.31129292E+05 EK= 0.38749E+04 SP= 0.00E+00 SK= 0.00E+00
+      870 T=  4232. E= -.27254329E+05 F= -.31113197E+05 EK= 0.38589E+04 SP= 0.00E+00 SK= 0.00E+00
+      880 T=  4235. E= -.27254250E+05 F= -.31115927E+05 EK= 0.38617E+04 SP= 0.00E+00 SK= 0.00E+00
+      890 T=  4273. E= -.27254450E+05 F= -.31151309E+05 EK= 0.38969E+04 SP= 0.00E+00 SK= 0.00E+00
+      900 T=  4235. E= -.27254415E+05 F= -.31116748E+05 EK= 0.38623E+04 SP= 0.00E+00 SK= 0.00E+00
+      910 T=  4252. E= -.27254500E+05 F= -.31131999E+05 EK= 0.38775E+04 SP= 0.00E+00 SK= 0.00E+00
+      920 T=  4218. E= -.27254489E+05 F= -.31101178E+05 EK= 0.38467E+04 SP= 0.00E+00 SK= 0.00E+00
+      930 T=  4205. E= -.27254433E+05 F= -.31089282E+05 EK= 0.38348E+04 SP= 0.00E+00 SK= 0.00E+00
