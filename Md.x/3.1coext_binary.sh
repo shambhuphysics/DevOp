@@ -7,8 +7,8 @@
 # Configuration parameters
 ELEMENT="Mg"
 TOTAL_ATOMS=7064
-TEMP_MIN=0                       # Minimum search temperature (K)
-TEMP_MAX=970                       # Maximum search temperature (K)
+TEMP_MIN=900                       # Minimum search temperature (K)
+TEMP_MAX=1990                       # Maximum search temperature (K)
 LIQUID_TEMP=4000
 ATOMIC_MASS=24.31
 NVE_MDLEN=1500                     # Minimum NSW = 1500
@@ -32,17 +32,17 @@ EAM="SIG=9.963404
 
 # Function to write base INCAR parameters
 write_incar() {
-  cat > INCAR << EOF
-SYSTEM=$ELEMENT, coexistence
-LSHIFT=.T.; R1REF=5.5; RL=7.321
-NWRITE=0
-tipo=eam
-IBRION=0
-NBLOCK=10
-KBLOCK=100
-POTIM=1.0
-POMASS=$ATOMIC_MASS
-$EAM
+    cat > INCAR << EOF
+    SYSTEM=$ELEMENT, coexistence
+    LSHIFT=.T.; R1REF=5.5; RL=7.321
+    NWRITE=0
+    tipo=eam
+    IBRION=0
+    NBLOCK=10
+    KBLOCK=100
+    POTIM=1.0
+    POMASS=$ATOMIC_MASS
+    $EAM
 EOF
 }
 
@@ -54,10 +54,10 @@ add_parameters() {
     local use_thermostat=$4
     
     cat >> INCAR << EOF
-NSW=$steps
-TEBEG=$temperature
-${fixed_atoms:+NFIX=$fixed_atoms}
-${use_thermostat:+LANDERSON=.T.; NANDERSON=300}
+    NSW=$steps
+    TEBEG=$temperature
+    ${fixed_atoms:+NFIX=$fixed_atoms}
+    ${use_thermostat:+LANDERSON=.T.; NANDERSON=300}
 EOF
 }
 
@@ -131,8 +131,8 @@ evaluate_temperature() {
     local therm_steps=2000
     local nve_steps=2000
     if [[ "$use_long_run" == "true" ]]; then
-        therm_steps=5000
-        nve_steps=3000
+        therm_steps=2000
+        nve_steps=5000
         echo "Using long evaluation mode for refinement" >&2
     fi
     
@@ -286,7 +286,7 @@ binary_search_coexistence() {
 # Main execution
 #===============================================================================
 
-echo "Advanced Coexistence Temperature Search"
+echo "Solid-Liquid Coexistence Temperature Binary Search"
 echo "======================================="
 echo "Element: $ELEMENT"
 echo "Total atoms: $TOTAL_ATOMS"
@@ -295,14 +295,6 @@ echo "Tolerance: $TEMP_TOLERANCE K"
 echo "Minimum NSW: $NVE_MDLEN"
 echo ""
 
-# Backup original structure
-if [[ -f POSCAR ]]; then
-    cp POSCAR POSCAR.org
-    echo "Original POSCAR backed up as POSCAR.org"
-else
-    echo "ERROR: No POSCAR file found!"
-    exit 1
-fi
 
 # Perform the search
 if binary_search_coexistence; then
