@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "Directory starting from /Scratch.."
+read DIRECTORY
+echo "Files name to upload.."
+read FILENAMES
+#ssh ucfbsbh@kathleen.rc.ucl.ac.uk "mkdir -p ~/Scratch/$DIRECTORY"
+scp -r $FILENAMES ucfbsbh@kathleen.rc.ucl.ac.uk:~$DIRECTORY/
+

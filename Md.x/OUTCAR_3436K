@@ -1,0 +1,62 @@
+ md.x 0.99
+ running on    6 nodes
+ distr:  one band on    1 nodes,    6 groups
+
+----------------------------------------------------------------------------------------------------
+
+ INCAR:
+
+ POSCAR: super cell                              
+  positions in direct lattice
+  velocities in cartesian coordinates
+  No initial velocities read in
+Rc and Rl:   5.500000  7.321000
+ TIPO = eam     
+ TIPO1 = uknown p
+ Using EAM
+
+ EAM parameters: 
+ C  =   9.9634  EPS  = 0.2048  A  = 3.5678  M  = 3.127  N  =  6.366  R1 =   5.500000
+
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      VASP found  21165 degrees of freedom                                   |
+|      the temperature will equal 2*E(kin)/ (degrees of freedom)              |
+|      this differs from previous releases, where T was 2*E(kin)/(3 NIONS).   |
+|      The new definition is more consistent                                  |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ SYSTEM =  Mg, coexistence                         
+ POSCAR =  super cell                              
+
+ Startparameter for this run:
+   NWRITE =      0    write-flag
+   NSW    =      2000    number of steps for IOM
+   NBLOCK =     10;   KBLOCK =    100    inner block; outer block 
+   POTIM  =   1.00    time-step for ionic-motion
+   TEIN   = 3436.0    initial temperature
+   TEBEG  = 3436.0;   TEEND  =3436.0 temperature during run
+   SMASS  =  -3.00    Nose mass-parameter (am)
+   estimated Nose-frequenzy (Omega)   =  0.10E-29 period in steps = 0.63E+46 mass=  -0.362E-25a.u.
+  Mass of Ions in am
+   POMASS =  24.31
+  Ionic-density in Kg/m^3    2442.26
+  volume of cell :   116627.43
+      direct lattice vectors                 reciprocal lattice vectors
+    19.889576266-34.449756634  0.000000000     0.025138796 -0.014513891  0.000000000
+    19.889576266 34.449756634  0.000000000     0.025138796  0.014513891 -0.000000000
+     0.000000000  0.000000000 85.105772244    -0.000000000  0.000000000  0.011750084
+
+  length of vectors
+    39.779152533 39.779152533 85.105772244     0.029027781  0.029027781  0.011750084
+
+

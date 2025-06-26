@@ -1,0 +1,51 @@
+ running on    6 nodes
+ distr:  one band on    1 nodes,    6 groups
+ md.x 0.99
+ POSCAR found :  1 types and     7056 ions
+Rc and Rl:   5.500000  7.321000
+ TIPO = eam     
+ TIPO1 = uknown p
+ Using EAM
+
+ EAM parameters: 
+ C  =   9.9634  EPS  = 0.2048  A  = 3.5678  M  = 3.127  N  =  6.366  R1 =   5.500000
+
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      VASP found  21165 degrees of freedom                                   |
+|      the temperature will equal 2*E(kin)/ (degrees of freedom)              |
+|      this differs from previous releases, where T was 2*E(kin)/(3 NIONS).   |
+|      The new definition is more consistent                                  |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ Random init:       21514       29085
+ Random init:       21514       29085
+ alloco spazio per displ
+ Random init:       21514       29085
+ Random init:       21514       29085
+ Random init:       21514       29085
+ Random init:       21514       29085
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x7f9f8a65ad11 in ???
+#1  0x7f9f8a659ee5 in ???
+#2  0x7f9f8a31008f in ???
+	at /build/glibc-B3wQXB/glibc-2.31/signal/../sysdeps/unix/sysv/linux/x86_64/sigaction.c:0
+#3  0x55622bbddd52 in ???
+#4  0x55622bb356d0 in ???
+#5  0x55622bb2a92e in ???
+#6  0x7f9f8a2f1082 in __libc_start_main
+	at ../csu/libc-start.c:308
+#7  0x55622bb2a96d in ???
+#8  0xffffffffffffffff in ???

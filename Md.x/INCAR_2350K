@@ -1,0 +1,18 @@
+    SYSTEM=Mg, coexistence
+    LSHIFT=.T.; R1REF=5.5; RL=7.321
+    NWRITE=0
+    tipo=eam
+    IBRION=0
+    NBLOCK=10
+    KBLOCK=100
+    POTIM=1.0
+    POMASS=24.31
+    SIG=9.963404
+     SIGREF=3.567764
+     MM=3.127240
+     EPSILON=0.204844
+     NN=6.365543
+    NSW=2000
+    TEBEG=2350
+    
+    

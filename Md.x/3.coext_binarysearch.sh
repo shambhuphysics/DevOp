@@ -7,12 +7,12 @@
 # Configuration parameters
 ELEMENT="Mg"
 TOTAL_ATOMS=7064
-TEMP_MIN=1500                        # Minimum search temperature (K)
-TEMP_MAX=2000                       # Maximum search temperature (K)
+TEMP_MIN=0                        # Minimum search temperature (K)
+TEMP_MAX=970                       # Maximum search temperature (K)
 LIQUID_TEMP=4000
 ATOMIC_MASS=24.31
 NVE_MDLEN=500
-MPI_CORES=4
+MPI_CORES=6
 
 # Search parameters
 TEMP_TOLERANCE=10                   # Reduced tolerance for better precision
