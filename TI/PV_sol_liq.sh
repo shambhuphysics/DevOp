@@ -1,11 +1,13 @@
 #!/bin/bash
 #===============================================================================
-# Volume-Pressure Calculation - Solid and Liquid Phases (FIXED)
+# Volume-Pressure Calculation - Solid and Liquid Phases (with melting)
 #===============================================================================
 
 # Configuration
 ELEMENT="Mg"
 TEMP=970
+MELT_TEMP=4000                      # High temperature for melting
+MELT_STEPS=4000                     # Steps for melting
 NVT_MDLEN=1500
 MPI_CORES=6
 COEXISTENCE_VOL=21.61
@@ -15,34 +17,74 @@ echo "# Volume(Å³) Pressure_Solid(GPa) Pressure_Liquid(GPa)" > VP.dat
 # EAM parameters
 EAM="SIG=9.963404; SIGREF=3.567764; MM=3.127240; EPSILON=0.204844; NN=6.365543"
 
+# Function to melt crystal structure and create liquid POSCAR
+create_liquid_poscar() {
+    local vol=$1
+    echo "Creating liquid structure at volume $vol Å³..." >&2
+    
+    # Start with crystal structure
+    cp POSCAR.sol POSCAR
+    sed -i "2s/.*/-$vol/" POSCAR
+    
+    # Create high-temperature INCAR for melting
+    cat > INCAR << EOF
+        SYSTEM=$ELEMENT melting
+        LSHIFT=.T.; R1REF=5.5; RL=7.321; NWRITE=0; tipo=eam
+        IBRION=0; NBLOCK=10; KBLOCK=100; POTIM=1.0; POMASS=24.31
+        NSW=$MELT_STEPS; TEBEG=$MELT_TEMP; LANDERSON=.T.; NANDERSON=300
+        $EAM
+EOF
+    
+    # Run melting simulation
+    mpirun -quiet -np $MPI_CORES ~/usr/md.x > md_melt_${vol}.log 2>&1
+    
+    # Prepare melted structure for liquid calculation
+    if [[ -f CONTCAR ]]; then
+        sed -n "1,$((TOTAL_ATOMS + 8))p" CONTCAR > POSCAR
+        echo "Liquid structure created" >&2
+        return 0
+    else
+        echo "ERROR: Melting failed" >&2
+        return 1
+    fi
+}
+
 # Function to run MD for a specific phase
 run_phase() {
     local vol=$1
     local phase=$2
-    local poscar_file="POSCAR.$phase"
     
-    # Copy and modify POSCAR (FIXED: proper sed syntax)
-    cp $poscar_file POSCAR
-    sed -i "2s/.*/-$vol/" POSCAR
+    if [[ "$phase" == "sol" ]]; then
+        # Use crystal structure
+        cp POSCAR.sol POSCAR
+        sed -i "2s/.*/-$vol/" POSCAR
+    else
+        # Create and use liquid structure
+        if ! create_liquid_poscar $vol; then
+            echo "N/A"
+            return 1
+        fi
+    fi
     
-    # Create INCAR and run
+    # Create INCAR for production run
     cat > INCAR << EOF
-SYSTEM=$ELEMENT ${phase}_VP
-LSHIFT=.T.; R1REF=5.5; RL=7.321; NWRITE=0; tipo=eam
-IBRION=0; NBLOCK=10; KBLOCK=100; POTIM=1.0; POMASS=24.31
-NSW=$NVT_MDLEN; TEBEG=$TEMP; LANDERSON=.T.; NANDERSON=300
-$EAM
+          SYSTEM=$ELEMENT ${phase}_VP
+          LSHIFT=.T.; R1REF=5.5; RL=7.321; NWRITE=0; tipo=eam
+          IBRION=0; NBLOCK=10; KBLOCK=100; POTIM=1.0; POMASS=24.31
+          NSW=$NVT_MDLEN; TEBEG=$TEMP; LANDERSON=.T.; NANDERSON=300
+          $EAM
 EOF
     
+    # Run production simulation
     mpirun -quiet -np $MPI_CORES ~/usr/md.x > md_${phase}_${vol}.log 2>&1
     
-    # Calculate pressure (FIXED: only return the pressure value)
+    # Calculate pressure
     if [[ -f OUTCAR ]]; then
         pressure=$(awk '/plus kinetic/{avg=($3+$4+$5)/3; sum+=avg; count++} 
                    END{if(count>0) printf "%.2f",(sum/count)/10; else print "N/A"}' OUTCAR)
         
         cp OUTCAR OUTCAR_${phase}_${vol}A3
-        echo "$pressure"  # Only return pressure value
+        echo "$pressure"
     else
         echo "N/A"
     fi
@@ -51,16 +93,17 @@ EOF
 # Function to run both phases at one volume
 run_volume() {
     local vol=$1
-    echo "=== Volume: $vol Å³ ===" >&2  # Send to stderr, not stdout
+    echo "=== Volume: $vol Å³ ===" >&2
     
-    # Run both phases and capture ONLY pressure values
-    p_solid=$(run_phase $vol "sol" 2>/dev/null)  # Suppress stderr
-    p_liquid=$(run_phase $vol "liq" 2>/dev/null)  # Suppress stderr
+    # Run solid phase
+    echo "Running solid phase..." >&2
+    p_solid=$(run_phase $vol "sol" 2>/dev/null)
     
-    # Clean output to stderr
+    # Run liquid phase (includes melting step)
+    echo "Running liquid phase (with melting at $MELT_TEMP K)..." >&2
+    p_liquid=$(run_phase $vol "liq" 2>/dev/null)
+    
     echo "Solid: $p_solid GPa, Liquid: $p_liquid GPa" >&2
-    
-    # Save clean data to VP.dat
     echo "$vol $p_solid $p_liquid" >> VP.dat
 }
 
@@ -69,9 +112,7 @@ run_volume() {
 #===============================================================================
 
 # Check required files
-for file in POSCAR.sol POSCAR.liq; do
-    [[ ! -f $file ]] && { echo "Error: $file not found"; exit 1; }
-done
+[[ ! -f POSCAR.sol ]] && { echo "Error: POSCAR.sol not found"; exit 1; }
 
 # Get atom count from solid POSCAR
 TOTAL_ATOMS=$(sed -n '6p' POSCAR.sol | awk '{print $1}')
@@ -82,6 +123,7 @@ vol_min=$(echo "$EXPECTED_VOL * 0.9" | bc -l)
 vol_max=$(echo "$EXPECTED_VOL * 1.1" | bc -l)
 
 echo "Solid-Liquid VP scan: $(printf "%.0f" $vol_min) to $(printf "%.0f" $vol_max) Å³"
+echo "Melting temperature: $MELT_TEMP K for $MELT_STEPS steps"
 
 # Run calculations
 for i in {0..10}; do
