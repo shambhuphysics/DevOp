@@ -1,0 +1,97 @@
+ running on    4 nodes
+ distr:  one band on    1 nodes,    4 groups
+ md.x 0.99
+ POSCAR found :  0 types and        0 ions
+
+Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.
+
+Backtrace for this error:
+Rc and Rl:   5.500000  7.321000
+ TIPO = eam     
+ TIPO1 = uknown p
+ Using EAM
+
+ EAM parameters: 
+ C  =   9.9634  EPS  = 0.2048  A  = 3.5678  M  = 3.127  N  =  6.366  R1 =   5.500000
+
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      VASP found     -3 degrees of freedom                                   |
+|      the temperature will equal 2*E(kin)/ (degrees of freedom)              |
+|      this differs from previous releases, where T was 2*E(kin)/(3 NIONS).   |
+|      The new definition is more consistent                                  |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ alloco spazio per displ
+
+Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.
+
+Backtrace for this error:
+
+Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.
+
+Backtrace for this error:
+
+Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.
+
+Backtrace for this error:
+#0  0x7fd4a80e0d11 in ???
+#1  0x7fd4a80dfee5 in ???
+#2  0x7fd4a7d9608f in ???
+	at /build/glibc-B3wQXB/glibc-2.31/signal/../sysdeps/unix/sysv/linux/x86_64/sigaction.c:0
+#3  0x55a235708b52 in ???
+#4  0x55a2356606d0 in ???
+#5  0x55a23565592e in ???
+#0  0x7f31a8ac0d11 in ???
+#1  0x7f31a8abfee5 in ???
+#2  0x7f31a877608f in ???
+	at /build/glibc-B3wQXB/glibc-2.31/signal/../sysdeps/unix/sysv/linux/x86_64/sigaction.c:0
+#3  0x559be28f1b52 in ???
+#4  0x559be28496d0 in ???
+#5  0x559be283e92e in ???
+#0  0x7f4a1678ed11 in ???
+#1  0x7f4a1678dee5 in ???
+#2  0x7f4a1644408f in ???
+	at /build/glibc-B3wQXB/glibc-2.31/signal/../sysdeps/unix/sysv/linux/x86_64/sigaction.c:0
+#3  0x561b12d9ab52 in ???
+#4  0x561b12cf26d0 in ???
+#5  0x561b12ce792e in ???
+#6  0x7fd4a7d77082 in __libc_start_main
+	at ../csu/libc-start.c:308
+#7  0x55a23565596d in ???
+#8  0xffffffffffffffff in ???
+#6  0x7f31a8757082 in __libc_start_main
+	at ../csu/libc-start.c:308
+#7  0x559be283e96d in ???
+#8  0xffffffffffffffff in ???
+#6  0x7f4a16425082 in __libc_start_main
+	at ../csu/libc-start.c:308
+#7  0x561b12ce796d in ???
+#8  0xffffffffffffffff in ???
+#0  0x7f25db8a0d11 in ???
+#1  0x7f25db89fee5 in ???
+#2  0x7f25db55608f in ???
+	at /build/glibc-B3wQXB/glibc-2.31/signal/../sysdeps/unix/sysv/linux/x86_64/sigaction.c:0
+#3  0x563225c49b52 in ???
+#4  0x563225ba16d0 in ???
+#5  0x563225b9692e in ???
+#6  0x7f25db537082 in __libc_start_main
+	at ../csu/libc-start.c:308
+#7  0x563225b9696d in ???
+#8  0xffffffffffffffff in ???
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 3 with PID 0 on node Sam exited on signal 8 (Floating point exception).
+--------------------------------------------------------------------------

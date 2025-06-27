@@ -1,0 +1,101 @@
+ running on    4 nodes
+ distr:  one band on    1 nodes,    4 groups
+ md.x 0.99
+ POSCAR found :  1 types and      432 ions
+Rc and Rl:   5.500000  7.321000
+ TIPO = eam     
+ TIPO1 = uknown p
+ Using EAM
+
+ EAM parameters: 
+ C  =   9.9634  EPS  = 0.2048  A  = 3.5678  M  = 3.127  N  =  6.366  R1 =   5.500000
+
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      VASP found   1293 degrees of freedom                                   |
+|      the temperature will equal 2*E(kin)/ (degrees of freedom)              |
+|      this differs from previous releases, where T was 2*E(kin)/(3 NIONS).   |
+|      The new definition is more consistent                                  |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+ Random init:       13574       21145
+ Random init:       13574       21145
+ Random init:       13574       21145
+ Random init:       13574       21145
+ alloco spazio per displ
+At line 1940 of file md.f90
+Fortran runtime error: Unit number is negative and unit was not already opened with OPEN(NEWUNIT=...)
+
+Error termination. Backtrace:
+At line 1940 of file md.f90
+Fortran runtime error: Unit number is negative and unit was not already opened with OPEN(NEWUNIT=...)
+
+Error termination. Backtrace:
+At line 1940 of file md.f90
+Fortran runtime error: Unit number is negative and unit was not already opened with OPEN(NEWUNIT=...)
+
+Error termination. Backtrace:
+        1 T=     0. E= -.23147412E+04 F= -.23147579E+04 EK= 0.16774E-01 SP= 0.00E+00 SK= 0.00E+00
+Rc and Rl:   5.500000  7.321000
+
+Average number of steps between two list updates:   0.00
+Average number of atoms in the shell:     0.15
+#0  0x7f5ba0f43d11 in ???
+#1  0x7f5ba0f44859 in ???
+#2  0x7f5ba0f4553f in ???
+#3  0x555c753330bc in ???
+#4  0x555c7532e92e in ???
+#5  0x7f5ba0bda082 in __libc_start_main
+	at ../csu/libc-start.c:308
+#6  0x555c7532e96d in ???
+#7  0xffffffffffffffff in ???
+#0  0x7fb494912d11 in ???
+#1  0x7fb494913859 in ???
+#2  0x7fb49491453f in ???
+#3  0x55c58a8db0bc in ???
+#4  0x55c58a8d692e in ???
+#5  0x7fb4945a9082 in __libc_start_main
+	at ../csu/libc-start.c:308
+#6  0x55c58a8d696d in ???
+#7  0xffffffffffffffff in ???
+#0  0x7fa5cae62d11 in ???
+#1  0x7fa5cae63859 in ???
+#2  0x7fa5cae6453f in ???
+#3  0x56481326c0bc in ???
+#4  0x56481326792e in ???
+#5  0x7fa5caaf9082 in __libc_start_main
+	at ../csu/libc-start.c:308
+#6  0x56481326796d in ???
+#7  0xffffffffffffffff in ???
+--------------------------------------------------------------------------
+mpirun has exited due to process rank 0 with PID 0 on
+node Sam exiting improperly. There are three reasons this could occur:
+
+1. this process did not call "init" before exiting, but others in
+the job did. This can cause a job to hang indefinitely while it waits
+for all processes to call "init". By rule, if one process calls "init",
+then ALL processes must call "init" prior to termination.
+
+2. this process called "init", but exited without calling "finalize".
+By rule, all processes that call "init" MUST call "finalize" prior to
+exiting or it will be considered an "abnormal termination"
+
+3. this process called "MPI_Abort" or "orte_abort" and the mca parameter
+orte_create_session_dirs is set to false. In this case, the run-time cannot
+detect that the abort call was an abnormal termination. Hence, the only
+error message you will receive is this one.
+
+This may have caused other processes in the application to be
+terminated by signals sent by mpirun (as reported here).
+
+You can avoid this message by specifying -quiet on the mpirun command line.
+--------------------------------------------------------------------------
